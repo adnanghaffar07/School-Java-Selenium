@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT"
+	name="Private School Web Automation">
+
+
+	<listeners>
+		<listener
+			class-name="com.privateschool.listeners.TestFilterListener" />
+		<listener class-name="com.privateschool.listeners.ExtentListeners" />
+		<listener
+			class-name="com.privateschool.listeners.AnnotationTransform" />
+		<!-- <listener class-name="com.privateschool.errorCollectors.TestListenerAdapter"/> -->
+	</listeners>
+	<test verbose="2" preserve-order="true"
+		name="Private School Web Automation - Tests" thread-count="1"
+		parallel="methods">
+
+		<classes>
+			<class name="com.privateschool.test.TestLogin" />
+
+		</classes>
+	</test>
+</suite> 
+ 	 	
