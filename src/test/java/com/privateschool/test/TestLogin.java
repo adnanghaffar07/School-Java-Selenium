@@ -2,6 +2,7 @@ package com.privateschool.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
@@ -13,6 +14,7 @@ import com.privateschool.pages.LoginPage;
 
 public class TestLogin extends BaseClass {
 	String tempSrc = "";
+	static Logger logger = Logger.getLogger(TestLogin.class.getName());
 
 	@Test(priority = 1)
 	public void VerifyLogin_ValidCredential() throws IOException {
@@ -22,7 +24,7 @@ public class TestLogin extends BaseClass {
 
 		driver = initConfiguration();
 
-		printString("VerifyLogin_ValidCredential:" + driver.hashCode() + "");
+		printString("VerifyLogin_ValidCredential");
 		lp = new LoginPage(driver);
 		
 		String email = PropertiesReader.getPropertyValue("appUser");
@@ -31,6 +33,7 @@ public class TestLogin extends BaseClass {
 		try {
 
 			testSteps.add("Step "+(++steps)+" : Visit app url");
+			logger.info("Step "+(steps)+" : Visit app url");
 			navigateToURL(PropertiesReader.getPropertyValue("appURL"), driver);
 			
 			tempSrc = getScreenshotPath();
@@ -38,9 +41,11 @@ public class TestLogin extends BaseClass {
 			captureCapture(driver, tempSrc);
 			
 			testSteps.add("Step "+(++steps)+" : Entering Email: "+email);
+			logger.info("Step "+(steps)+" : Entering Email: "+email);
 			lp.enterUserName(driver, email);
 			
 			testSteps.add("Step "+(++steps)+" : Entering Password: "+pass);
+			logger.info("Step "+(steps)+" : Entering Password: "+pass);
 			lp.enterPassword(driver, pass);
 			
 			tempSrc = getScreenshotPath();
@@ -48,14 +53,17 @@ public class TestLogin extends BaseClass {
 			captureCapture(driver, tempSrc);
 			
 			testSteps.add("Step "+(++steps)+" : Click On Login Button");
+			logger.info("Step "+(steps)+" : Click On Login Button");
 			lp.clickOnLoginButton(driver);
 			
 			testSteps.add("Step "+(++steps)+" : Verifying <b>'User Successfully Logged in'</b>");
+			logger.info("Step "+(steps)+" : Verifying <b>'User Successfully Logged in'</b>");
 			assertTrue(lp.isDashboardDisplaying(driver),"User is not able to Logged in successfully");
 			tempSrc = getScreenshotPath();
 			testSteps.add(tempSrc);
 			captureCapture(driver, tempSrc);
 			testSteps.add("Step "+(++steps)+" : Verified: <b>'User Successfully Logged in'</b>");
+			logger.info("Step "+(steps)+" : Verified: <b>'User Successfully Logged in'</b>");
 
 			testSteps.add("Step "+(++steps)+" : Close the Browser");
 			AddTest_IntoReport("VerifyLogin_ValidCredential", testSteps, driver);
@@ -91,7 +99,7 @@ public class TestLogin extends BaseClass {
 
 		driver = initConfiguration();
 
-		printString("VerifyLogin_InvalidCredential:" + driver.hashCode() + "");
+		printString("VerifyLogin_InvalidCredential");
 		lp = new LoginPage(driver);
 		
 		String email = PropertiesReader.getPropertyValue("invalid_appUser");
@@ -100,6 +108,7 @@ public class TestLogin extends BaseClass {
 		try {
 
 			testSteps.add("Step "+(++steps)+" : Visit app url");
+			logger.info("Step "+(steps)+" : Visit app url");
 			navigateToURL(PropertiesReader.getPropertyValue("appURL"), driver);
 			
 			tempSrc = getScreenshotPath();
@@ -107,9 +116,11 @@ public class TestLogin extends BaseClass {
 			captureCapture(driver, tempSrc);
 			
 			testSteps.add("Step "+(++steps)+" : Entering Invalid Email: "+email);
+			logger.info("Step "+(steps)+" : Entering Invalid Email: "+email);
 			lp.enterUserName(driver, email);
 			
 			testSteps.add("Step "+(++steps)+" : Entering Invalid Password: "+pass);
+			logger.info("Step "+(steps)+" : Entering Invalid Password: "+pass);
 			lp.enterPassword(driver, pass);
 			
 			tempSrc = getScreenshotPath();
@@ -117,16 +128,20 @@ public class TestLogin extends BaseClass {
 			captureCapture(driver, tempSrc);
 			
 			testSteps.add("Step "+(++steps)+" : Click On Login Button");
+			logger.info("Step "+(steps)+" : Click On Login Button");
 			lp.clickOnLoginButton(driver);
 			
 			testSteps.add("Step "+(++steps)+" : Verifying <b>'User or password is not correct'</b> is Displaying");
+			logger.info("Step "+(steps)+" : Verifying <b>'User or password is not correct'</b> is Displaying");
 			assertTrue(lp.isInvalidErrorMessageDisplaying(driver),"<b>'User or password is not correct'</b> is not Displaying");
 			tempSrc = getScreenshotPath();
 			testSteps.add(tempSrc);
 			captureCapture(driver, tempSrc);
 			testSteps.add("Step "+(++steps)+" : Verified: <b>'User or password is not correct'</b> is Displaying");
+			logger.info("Step "+(steps)+" : Verified: <b>'User or password is not correct'</b> is Displaying");
 			
 			testSteps.add("Step "+(++steps)+" : Close the Browser");
+			logger.info("Step "+(steps)+" : Close the Browser");
 			AddTest_IntoReport("VerifyLogin_InvalidCredential", testSteps, driver);
 
 		} catch (Exception e) {

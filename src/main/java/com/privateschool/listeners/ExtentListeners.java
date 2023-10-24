@@ -49,6 +49,7 @@ import com.privateschool.utilities.ReportUtils;
 import com.privateschool.utilities.SendEmail;
 import com.privateschool.utilities.SlackUtils;
 import com.privateschool.utilities.ZipUtils;
+import java.awt.Desktop;
 
 public class ExtentListeners extends BaseClass implements ITestListener,ISuiteListener {
 
@@ -103,7 +104,8 @@ public class ExtentListeners extends BaseClass implements ITestListener,ISuiteLi
  			emailBody =  testResult(suite);
 		} catch (Exception e) {System.out.println("Error: "+e.getMessage());}
  		
-
+ 		openReportFileInDefaultBrowser();
+ 	    
 	}	
 	public String testResult(ISuite suite) {
 		Map<String, ISuiteResult> getResults = suite.getResults();
@@ -142,4 +144,31 @@ public class ExtentListeners extends BaseClass implements ITestListener,ISuiteLi
  		return emailBody;
 	}
  
+
+	public void openReportFileInDefaultBrowser() {
+		// Specify the path to the HTML file you want to open
+        String htmlFilePath = System.getProperty("user.dir")+File.separator+"reports"+File.separator+"Web Automation Test Report.html";
+
+        // Create a File object representing the HTML file
+        File htmlFile = new File(htmlFilePath);
+
+        // Check if Desktop is supported on the current platform
+        if (Desktop.isDesktopSupported()) {
+            Desktop desktop = Desktop.getDesktop();
+
+            // Check if the HTML file exists
+            if (htmlFile.exists()) {
+                try {
+                    // Open the HTML file with the default web browser
+                    desktop.open(htmlFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("HTML file does not exist.");
+            }
+        } else {
+            System.out.println("Desktop is not supported on this platform.");
+        }
+	}
 }
